@@ -1,2 +1,5 @@
 # oss-guru-mediatorflow-ai
-"Self-Migrating Mediation Swarm for Telecom OSS | Chennai-Built OSS"
+![Pioneer](pioneer-animated.svg)
+# MediatorFlow AI
+*The Self-Migrating Mediation Swarm*
+
