@@ -1,0 +1,38 @@
+
+#### **docker-compose.yml** (One-Click Magic)
+```yaml
+version: '3.8'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.5.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+
+  kafka:
+    image: confluentinc/cp-kafka:7.5.0
+    depends_on: [zookeeper]
+    ports: ["9092:9092"]
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+
+  redis:
+    image: redis:7-alpine
+
+  ray-head:
+    image: rayproject/ray:latest
+    ports: ["8265:8265"]
+    command: ["ray", "start", "--head"]
+
+  mediator-pod:
+    build: .  # Dockerfile with Python mediator stub
+    depends_on: [kafka, redis]
+    deploy:
+      replicas: 3
+    environment:
+      KAFKA_BOOTSTRAP: kafka:9092
+
+  dashboard:
+    build: ./dashboard
+    ports: ["3000:3000"]
+    depends_on: [ray-head]

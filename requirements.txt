@@ -1,0 +1,6 @@
+torch==2.1.0
+torch-geometric==2.4.0
+ray[serve]==2.8.0
+kafka-python==2.0.2
+redis==5.0.1
+three==0.158.0  # For dashboard

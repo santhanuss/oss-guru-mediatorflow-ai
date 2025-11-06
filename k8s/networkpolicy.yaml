@@ -1,0 +1,16 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: mediator-traffic
+spec:
+  endpointSelector:
+    matchLabels:
+      app: mediator-pod
+  ingress:
+  - fromEndpoints:
+    - matchLabels:
+        ne: "eNB-*"
+    toPorts:
+    - ports:
+      - port: "8080"
+        protocol: TCP

@@ -1,0 +1,17 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledJob
+metadata:
+  name: mediator-swarm
+spec:
+  jobTargetRef:
+    template:
+      spec:
+        containers:
+        - name: mediator-pod
+          image: santhanu/mediator:v1
+  scalingTriggers:
+  - type: kafka
+    metadata:
+      topic: raw-cdr-ingress
+      lagThreshold: "1000"
+      bootstrapServers: "kafka:9092"
